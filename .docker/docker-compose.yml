@@ -1,0 +1,19 @@
+version: '3'
+networks:
+  default:
+    name: GAIA
+    external: true
+
+services:
+  nodejs:
+    container_name: marketplace-api
+    build:
+      context: ./nodejs
+    environment:
+      - VIRTUAL_HOST=marketplace-api.localhost
+      - VIRTUAL_PORT=3000
+      - USR_DB_CONN=mongodb://gaia:password@local_mongo:27017/?authSource=admin
+      - USR_DB_NAME=prueba
+    volumes:
+      - '../:/usr/src/app'
+    command: npm run start-dev

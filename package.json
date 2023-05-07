@@ -1,0 +1,56 @@
+{
+  "name": "marketplace-api",
+  "version": "0.0.1",
+  "description": "A marketplace with typescript, express, mongo and nodejs",
+  "main": "dist/app.js",
+  "scripts": {
+    "tsc": "tsc",
+    "dev-debug": "nodemon --watch . --ext ts --exec \"npm run tsc\"",
+    "start": "npm run tsc && node ./dist/app.js",
+    "start-dev": "npm i && npm run tsc && node ./dist/app.js",
+    "test-dev": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\"",
+    "dev": "nodemon --watch . --ext ts --exec \"docker-compose build && docker-compose up\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "REST",
+    "API",
+    "ExpressJS",
+    "NodeJS",
+    "Typescript"
+  ],
+  "author": "Hugo Hernandez Valdez",
+  "license": "ISC",
+  "dependencies": {
+    "@types/mongodb": "^4.0.7",
+    "argon2": "^0.27.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
+    "express": "^4.17.1",
+    "express-winston": "^4.0.2",
+    "helmet": "^4.4.1",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.1.0",
+    "reflect-metadata": "^0.1.13",
+    "short-uuid": "^3.1.1",
+    "typedi": "^0.10.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/argon2": "^0.15.0",
+    "@types/chai": "^4.2.8",
+    "@types/express": "^4.17.2",
+    "@types/helmet": "^4.0.0",
+    "@types/mocha": "^7.0.1",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^13.5.2",
+    "chai": "^4.2.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.2",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.6.2",
+    "tslint": "^6.0.0",
+    "typescript": "^4.1.3"
+  }
+}
