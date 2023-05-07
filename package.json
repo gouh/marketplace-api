@@ -12,6 +12,11 @@
     "dev": "nodemon --watch . --ext ts --exec \"docker-compose build && docker-compose up\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gouh/marketplace-api.git"
+  },
+  "homepage": "https://github.com/gouh/marketplace-api#readme",
   "keywords": [
     "REST",
     "API",

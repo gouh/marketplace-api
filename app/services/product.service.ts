@@ -9,10 +9,7 @@ import {ProductNotFoundError} from "./errors/product.not.found.error";
 
 @Service({factory: [ProductServiceFactory, "create"]})
 export class ProductService implements ProductServiceInterface {
-
-    constructor(
-        private productRepository: ProductRepositoryInterface
-    ) {
+    constructor(private productRepository: ProductRepositoryInterface) {
     }
 
     async countItems(): Promise<number> {
