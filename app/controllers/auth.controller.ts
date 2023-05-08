@@ -16,6 +16,11 @@ const UserAlreadyExistMessage: string = 'User already exist';
 const UserPasswordMessage: string = 'Incorrect user or password';
 
 export class AuthController {
+    /**
+     * Register a new seller
+     * @param req
+     * @param res
+     */
     async signup(req: express.Request, res: express.Response) {
         let userService: UserServiceInterface = Container.get(UserService);
         try {
@@ -31,6 +36,11 @@ export class AuthController {
         }
     }
 
+    /**
+     * Login seller or admin
+     * @param req
+     * @param res
+     */
     async login(req: express.Request, res: express.Response) {
         let authService: AuthServiceInterface = Container.get(AuthService);
         try {
@@ -38,6 +48,7 @@ export class AuthController {
             const token: TokenDto = await authService.login(userRequest);
             return getResponse(res, StatusCodes.OK, token, LoginSuccessful);
         } catch (err) {
+            console.log(err)
             if (err instanceof UserPasswordError) {
                 return getResponse(res, StatusCodes.UNAUTHORIZED, null, UserPasswordMessage);
             } else {

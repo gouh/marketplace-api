@@ -15,14 +15,22 @@ export class ProductService implements ProductServiceInterface {
     constructor(private productRepository: ProductRepositoryInterface) {
     }
 
+    /**
+     * @inheritDoc
+     */
     async countItems(filter: object): Promise<number> {
         return await this.productRepository.count(filter);
     }
 
-    async getOne(id: string, userId: string): Promise<ProductDto> {
+    /**
+     * @inheritDoc
+     */
+    async getOne(id: string, userId: string, isAdmin: boolean): Promise<ProductDto> {
         let dto: ProductDto;
         let result: Product = await this.productRepository.findOne(id);
-        if (result && (userId && userId == result.userId.toString())) {
+        let isOwner = userId ? (userId && userId == result.userId.toString()) : true;
+        isOwner = isAdmin ? true : isOwner;
+        if (result && isOwner) {
             dto = ProductDtoMapper.fromModelToDto(result)
         } else {
             throw new ProductNotFoundError();
@@ -30,6 +38,9 @@ export class ProductService implements ProductServiceInterface {
         return dto;
     }
 
+    /**
+     * @inheritDoc
+     */
     async getFilter(query: ParsedQs, userId: string, isAdmin: boolean): Promise<object> {
         let filter: any = {}
         let filterOr = [];
@@ -73,11 +84,17 @@ export class ProductService implements ProductServiceInterface {
         return filter;
     }
 
+    /**
+     * @inheritDoc
+     */
     async getPagination(productFilter: object, currentPage: number, limit: number): Promise<ProductDto[]> {
         let result: Product[] = await this.productRepository.findByPage(productFilter, currentPage, limit);
         return ProductDtoMapper.fromArrayModelToDto(result);
     }
 
+    /**
+     * @inheritDoc
+     */
     async create(product: ProductDto): Promise<ProductDto> {
         let products: Product[] = await this.productRepository.findBy({"sku": product.sku, userId: product.userId});
         if (products.length > 0){
@@ -87,6 +104,9 @@ export class ProductService implements ProductServiceInterface {
         return ProductDtoMapper.fromModelToDto(result)
     }
 
+    /**
+     * @inheritDoc
+     */
     async update(id: string, productUpdate: ProductDto): Promise<ProductDto> {
         let products: Product[] = await this.productRepository.findBy({"_id": id, userId: productUpdate.userId});
         if (products.length > 0) {
@@ -104,6 +124,9 @@ export class ProductService implements ProductServiceInterface {
         return productUpdate
     }
 
+    /**
+     * @inheritDoc
+     */
     async delete(id: string, userId: string): Promise<boolean> {
         let products: Product[] = await this.productRepository.findBy({"_id": id, userId: userId});
         let isDeleted: boolean = true;

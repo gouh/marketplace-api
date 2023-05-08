@@ -3,6 +3,11 @@ import {validate} from "class-validator";
 
 export * from "class-validator";
 
+/**
+ * validate object with a some schema
+ * @param schema
+ * @param requestObject
+ */
 export const validationPipe = async (schema: new () => {}, requestObject: object) => {
     const transformedClass: any = plainToInstance(schema, requestObject);
     const errors = await validate(transformedClass);

@@ -18,6 +18,12 @@ export class ProductMiddleware {
         return ProductMiddleware.instance;
     }
 
+    /**
+     * Validate id of some product
+     * @param req
+     * @param res
+     * @param next
+     */
     async validateId(req: express.Request, res: express.Response, next: express.NextFunction) {
         try {
             new ObjectId(req.params.id)
@@ -27,6 +33,12 @@ export class ProductMiddleware {
         }
     }
 
+    /**
+     * Validate product in request
+     * @param req
+     * @param res
+     * @param next
+     */
     async validateProduct(req: express.Request, res: express.Response, next: express.NextFunction) {
         const result: any = await validationPipe(ProductDto, {...req.body});
         if (result === true) {
@@ -36,6 +48,12 @@ export class ProductMiddleware {
         }
     }
 
+    /**
+     * Transform request to dto
+     * @param req
+     * @param res
+     * @param next
+     */
     async mapProductToDto(req: express.Request, res: express.Response, next: express.NextFunction) {
         const product = req.body;
         req.body.product = {

@@ -6,6 +6,10 @@ import {Container} from "typedi";
 import {validationPipe} from "./validation/validation";
 import {UserPayloadDto} from "../dto/user.dto";
 
+/**
+ * Verify current token and valid with UserPayloadDto schema
+ * @param auth
+ */
 async function verifyToken(auth: string): Promise<JwtPayload> {
     let authorization = auth.split(' ');
     if (authorization[0] === 'Bearer') {
@@ -30,6 +34,12 @@ export class AuthMiddleware {
         return AuthMiddleware.instance;
     }
 
+    /**
+     * Validate token if exist
+     * @param req
+     * @param res
+     * @param next
+     */
     async verifyOptionalToken(req: express.Request, res: express.Response, next: express.NextFunction) {
         if (req.headers['authorization']) {
             try {
@@ -44,6 +54,12 @@ export class AuthMiddleware {
         }
     }
 
+    /**
+     * Validate token
+     * @param req
+     * @param res
+     * @param next
+     */
     async verifyToken(req: express.Request, res: express.Response, next: express.NextFunction) {
         if (req.headers['authorization']) {
             try {

@@ -16,6 +16,12 @@ export class UserMiddleware {
         return UserMiddleware.instance;
     }
 
+    /**
+     * Validate user in request
+     * @param req
+     * @param res
+     * @param next
+     */
     async validateUser(req: express.Request, res: express.Response, next: express.NextFunction) {
         const result: any = await validationPipe(UserRequestDto, {...req.body});
         if (result === true) {
@@ -25,6 +31,12 @@ export class UserMiddleware {
         }
     }
 
+    /**
+     * Transform request to dto
+     * @param req
+     * @param res
+     * @param next
+     */
     async mapUserToDto(req: express.Request, res: express.Response, next: express.NextFunction) {
         const product = req.body;
         req.body.user = {

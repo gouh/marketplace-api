@@ -14,13 +14,16 @@ export class UserRepository extends Repository implements UserRepositoryInterfac
         const collection = await this.getCollection();
         item.createdAt = new Date();
         const result: InsertOneResult = await collection.insertOne(item);
+        await this.closeConnection();
         item._id = result.insertedId;
         return item;
     }
 
     async findBy(query: Filter<any>): Promise<User[]> {
         const collection = await this.getCollection();
-        return await collection.find<User>(query).toArray()
+        let users: User[] = await collection.find<User>(query).toArray();
+        await this.closeConnection();
+        return users;
     }
 
     /**
@@ -29,7 +32,9 @@ export class UserRepository extends Repository implements UserRepositoryInterfac
     async findOne(id: string): Promise<User> {
         const collection = await this.getCollection();
         const query = {_id: new ObjectId(id.trim())};
-        return await collection.findOne<User>(query) as User
+        let user: User = await collection.findOne<User>(query) as User;
+        await this.closeConnection();
+        return user;
     }
 
     /**
@@ -40,6 +45,7 @@ export class UserRepository extends Repository implements UserRepositoryInterfac
         const query = {_id: new ObjectId(id)};
         item.updatedAt = new Date();
         const result: UpdateResult = await collection.updateOne(query, {$set: item});
-        return result.acknowledged
+        await this.closeConnection();
+        return result.acknowledged;
     }
 }

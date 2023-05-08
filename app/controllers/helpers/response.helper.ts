@@ -1,6 +1,14 @@
 import {ResponseInterface, ResponsePagination, ResponsePaginationInterface} from "../../interfaces/response.interface";
 import express from "express";
 import {getReasonPhrase, StatusCodes} from "http-status-codes";
+
+/**
+ * Build a structure for response
+ * @param httpCode
+ * @param data
+ * @param message
+ * @param errors
+ */
 function buildBodyStructure(httpCode: number, data: any, message: string, errors: string[]): ResponseInterface {
     return {
         meta: {
@@ -13,17 +21,42 @@ function buildBodyStructure(httpCode: number, data: any, message: string, errors
         data: data
     }
 }
+
+/**
+ * Build a structure of response with pagination
+ * @param httpCode
+ * @param data
+ * @param message
+ * @param pagination
+ */
 function buildBodyPagination(httpCode: number, data: any, message: string, pagination: ResponsePagination): ResponsePaginationInterface {
     return {
         ...buildBodyStructure(httpCode, data, message, []),
         pagination: pagination
     }
 }
+
+/**
+ * Make a generic response
+ * @param response
+ * @param httpCode
+ * @param data
+ * @param message
+ * @param errors
+ */
 export function getResponse(response: express.Response, httpCode: number, data: any, message?: string, errors?: string[]) {
     message = typeof message == 'undefined' ? '' : message;
     errors = typeof errors == 'undefined' ? [] : errors;
     return response.status(httpCode).send(buildBodyStructure(httpCode, data, message, errors))
 }
+
+/**
+ * Make a pagination structure
+ * @param page
+ * @param totalInPage
+ * @param totalItems
+ * @param limit
+ */
 export function calcPagination(page: number, totalInPage: number, totalItems: number, limit: number): ResponsePagination {
     let limitAround = 5
     let totalPages = Math.ceil(totalItems / limit);
@@ -52,6 +85,14 @@ export function calcPagination(page: number, totalInPage: number, totalItems: nu
         itemsPerPage: limit,
     };
 }
+
+/**
+ * Make a generic response with pagination
+ * @param response
+ * @param data
+ * @param pagination
+ * @param message
+ */
 export function getResponsePagination(response: express.Response, data: any, pagination: ResponsePagination, message?: string) {
     message = typeof message == 'undefined' ? '' : message;
     return response.status(StatusCodes.OK).send(buildBodyPagination(StatusCodes.OK, data, message, pagination))
