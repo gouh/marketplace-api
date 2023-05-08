@@ -1,6 +1,6 @@
 import express from "express";
 import {validationPipe} from "./validation/validation";
-import {RequestProductDto} from "../dto/request.product.dto";
+import {ProductDto} from "../dto/product.dto";
 import {getResponse} from "../controllers/helpers/response.helper";
 import {StatusCodes} from "http-status-codes";
 import {ObjectId} from "bson";
@@ -28,7 +28,7 @@ export class ProductMiddleware {
     }
 
     async validateProduct(req: express.Request, res: express.Response, next: express.NextFunction) {
-        const result: any = await validationPipe(RequestProductDto, {...req.body});
+        const result: any = await validationPipe(ProductDto, {...req.body});
         if (result === true) {
             next();
         } else {

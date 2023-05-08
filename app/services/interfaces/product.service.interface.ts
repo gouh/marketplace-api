@@ -1,16 +1,18 @@
-import {Product} from "../../models/product";
-import {ProductDto} from "../../dto/request.product.dto";
+import {ProductDto} from "../../dto/product.dto";
+import {ParsedQs} from "qs";
 
 export interface ProductServiceInterface {
-    countItems(): Promise<number>;
+    countItems(filter: object): Promise<number>;
 
-    getPagination(currentPage: number, limit: number): Promise<ProductDto[]>;
+    getFilter(queryParams: ParsedQs, userId: string, isAdmin: boolean): object;
 
-    getOne(id: string): Promise<ProductDto>;
+    getPagination(productFiler: object, currentPage: number, limit: number): Promise<ProductDto[]>;
+
+    getOne(id: string, userId: string): Promise<ProductDto>;
 
     create(productDto: ProductDto): Promise<ProductDto>;
 
     update(id: string, productDto: ProductDto): Promise<ProductDto>;
 
-    delete(id: string): Promise<boolean>;
+    delete(id: string, userId: string): Promise<boolean>;
 }

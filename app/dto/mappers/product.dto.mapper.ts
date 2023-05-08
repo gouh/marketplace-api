@@ -1,4 +1,4 @@
-import {ProductDto} from "../request.product.dto";
+import {ProductDto} from "../product.dto";
 import {Product} from "../../models/product";
 import {ObjectId} from "bson";
 
@@ -9,6 +9,7 @@ export class ProductDtoMapper {
             sku: product.sku,
             name: product.name,
             price: product.price,
+            userId: product.userId ? new ObjectId(product.userId) : new ObjectId(""),
         }
     }
 
@@ -18,6 +19,7 @@ export class ProductDtoMapper {
             sku: model.sku,
             name: model.name,
             price: model.price,
+            userId: model.userId.toString(),
             createdAt: model.createdAt,
             updatedAt: model.updatedAt,
         }

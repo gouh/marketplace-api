@@ -5,7 +5,7 @@ import {MongoDBConnector} from "../../db/mongodb.connector";
 import {Container} from "typedi";
 
 export class ProductRepositoryFactory implements FactoryInterface {
-    private collectionName: string = "product";
+    private collectionName: string = "Products";
 
     create(): ProductRepositoryInterface {
         return new ProductRepository(

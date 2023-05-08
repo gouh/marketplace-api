@@ -12,7 +12,10 @@ export class MongoDBConnector implements DbConnectorInterface {
 
     async getDb(): Promise<Db> {
         if (typeof this._db == 'undefined' || !this._db) {
-            const client: MongoClient = new MongoClient(this.url);
+            const client: MongoClient = new MongoClient(this.url, { monitorCommands:true });
+            client.on('commandStarted', (event) => console.debug(event.command));
+            client.on('commandSucceeded', (event) => console.debug(event));
+            client.on('commandFailed', (event) => console.debug(event));
             await client.connect();
             this._db = client.db(this.dbName);
         }

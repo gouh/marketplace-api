@@ -1,17 +1,7 @@
-export interface WriteInterface<T> {
-    /**
-     * Create a new item
-     * @param item
-     */
-    create(item: T): Promise<T>;
+import {CreateInterfaceInterface} from "./create.interface";
+import {UpdateInterfaceInterface} from "./update.interface";
 
-    /**
-     * Update an existing item
-     * @param id
-     * @param item
-     */
-    update(id: string, item: T): Promise<boolean>;
-
+export interface WriteInterface<T> extends CreateInterfaceInterface<T>, UpdateInterfaceInterface<T> {
     /**
      * Delete an item
      * @param id

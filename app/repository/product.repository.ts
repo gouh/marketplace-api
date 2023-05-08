@@ -1,7 +1,7 @@
 import {Product} from "../models/product";
 import {Repository} from "./abstract.repository";
 import {ProductRepositoryInterface} from "./interfaces/product.repository.interface";
-import {DeleteResult, InsertOneResult, UpdateResult, ObjectId} from "mongodb";
+import {DeleteResult, InsertOneResult, UpdateResult, ObjectId, Filter} from "mongodb";
 import {Service} from "typedi";
 import {ProductRepositoryFactory} from "./factories/product.repository.factory";
 
@@ -31,19 +31,24 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
     /**
      * @inheritDoc
      */
-    async count(): Promise<number> {
+    async count(filter: object): Promise<number> {
         const collection = await this.getCollection();
-        return await collection.countDocuments();
+        return await collection.find<Product>(filter).count();
+    }
+
+    async findBy(query: Filter<any>): Promise<Product[]> {
+        const collection = await this.getCollection();
+        return await collection.find<Product>(query).toArray()
     }
 
     /**
      * @inheritDoc
      */
-    async findByPage(currentPage: number, limit: number): Promise<Product[]> {
+    async findByPage(filter: object, currentPage: number, limit: number): Promise<Product[]> {
         let skip = currentPage < 0 ? 0 : (currentPage - 1);
         const collection = await this.getCollection();
         return await collection
-            .find<Product>({})
+            .find<Product>(filter)
             .limit(limit)
             .skip(skip * limit)
             .sort('_id', 'desc')
