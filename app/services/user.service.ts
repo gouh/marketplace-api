@@ -15,6 +15,11 @@ export class UserService implements UserServiceInterface {
     constructor(private userRepository: UserRepositoryInterface, private passwordKey: string) {
     }
 
+    async getAll(): Promise<UserDto[]> {
+        let result: User[] = await this.userRepository.findBy({});
+        return UserDtoMapper.fromArrayModelToDto(result)
+    }
+
     async getOne(id: string): Promise<UserDto> {
         let dto: UserDto;
         let result: User = await this.userRepository.findOne(id);

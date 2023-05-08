@@ -1,4 +1,4 @@
-import express from 'express';
+import express, {Router} from 'express';
 import * as http from 'http';
 import * as bodyparser from 'body-parser';
 import * as winston from 'winston';
@@ -30,7 +30,8 @@ app.use(function (req, res, next) {
         return next();
     }
 });
-
+let router = Router();
+app.use(router)
 app.use(helmet());
 
 app.use(expressWinston.logger({

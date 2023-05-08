@@ -5,7 +5,7 @@ import {UserMiddleware} from "../middleware/user.middleware";
 import {AuthController} from "../controllers/auth.controller";
 
 export class AuthRouter extends AbstractRouter implements RouterInterface {
-    constructor(public app: express.Application) {
+    constructor(public app: express.Router) {
         super(app, "AuthRouter");
         this.configureRoutes();
     }
