@@ -19,6 +19,7 @@ export class ProductDtoMapper {
             sku: model.sku,
             name: model.name,
             price: model.price,
+            userId: model.userId.toString(),
             createdAt: model.createdAt,
             updatedAt: model.updatedAt,
         }

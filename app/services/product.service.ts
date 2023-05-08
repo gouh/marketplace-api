@@ -54,7 +54,12 @@ export class ProductService implements ProductServiceInterface {
         }
 
         if (typeof query.seller != 'undefined' && isAdmin) {
-            filterOr.push({"userId": {"$in": query.seller}});
+            let sellers: (string | ParsedQs)[] = Array.isArray(query.seller) ? query.seller : [query.seller];
+            let sellerObjects: ObjectId[] = [];
+            for (let i = 0; i < sellers.length; i++) {
+                sellerObjects[i] = new ObjectId(sellers[i].toString())
+            }
+            filter["$and"] = [{"userId": {"$in": sellerObjects}}];
         }
 
         if (filterOr.length > 0) {
