@@ -5,11 +5,20 @@ export interface ProductDto {
     sku: string;
     name: string;
     price: number;
+    userId?: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-export class RequestProductDto implements ProductDto {
+export interface ProductFilter {
+    name: string | null;
+    sku: string | null;
+    priceMin: string | null;
+    priceMax: string | null;
+    userId: string | null;
+}
+
+export class ProductDto implements ProductDto {
     @IsString()
     sku: string;
     @IsString()

@@ -14,6 +14,8 @@ services:
       - VIRTUAL_PORT=3000
       - USR_DB_CONN=mongodb://gaia:password@local_mongo:27017/?authSource=admin
       - USR_DB_NAME=prueba
+      - USR_PASSWORD_KEY=loremipsum
+      - USR_JWT_SECRET=My!@!Se3cr8tH4sh
     volumes:
       - '../:/usr/src/app'
     command: npm run start-dev

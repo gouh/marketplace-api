@@ -4,22 +4,25 @@ import {ProductServiceFactory} from './factory/product.service.factory'
 import {ProductRepositoryInterface} from "../repository/interfaces/product.repository.interface";
 import {Product} from "../models/product";
 import {ProductDtoMapper} from "../dto/mappers/product.dto.mapper";
-import {ProductDto} from "../dto/request.product.dto";
+import {ProductDto} from "../dto/product.dto";
 import {ProductNotFoundError} from "./errors/product.not.found.error";
+import {ObjectId} from "bson";
+import {ParsedQs} from "qs";
+import {ProductAlreadyExistError} from "./errors/product.already.exist.error";
 
 @Service({factory: [ProductServiceFactory, "create"]})
 export class ProductService implements ProductServiceInterface {
     constructor(private productRepository: ProductRepositoryInterface) {
     }
 
-    async countItems(): Promise<number> {
-        return await this.productRepository.count();
+    async countItems(filter: object): Promise<number> {
+        return await this.productRepository.count(filter);
     }
 
-    async getOne(id: string): Promise<ProductDto> {
+    async getOne(id: string, userId: string): Promise<ProductDto> {
         let dto: ProductDto;
         let result: Product = await this.productRepository.findOne(id);
-        if (result) {
+        if (result && (userId && userId == result.userId.toString())) {
             dto = ProductDtoMapper.fromModelToDto(result)
         } else {
             throw new ProductNotFoundError();
@@ -27,19 +30,62 @@ export class ProductService implements ProductServiceInterface {
         return dto;
     }
 
-    async getPagination(currentPage: number, limit: number): Promise<ProductDto[]> {
-        let result: Product[] = await this.productRepository.findByPage(currentPage, limit);
+    async getFilter(query: ParsedQs, userId: string, isAdmin: boolean): Promise<object> {
+        let filter: any = {}
+        let filterOr = [];
+
+        if (typeof query.priceMin == 'string' || typeof query.priceMax == 'string') {
+            let filterPrice: any = {};
+            if (typeof query.priceMin == 'string') {
+                filterPrice["$gte"] = parseFloat(query.priceMin);
+            }
+            if (typeof query.priceMax == 'string') {
+                filterPrice["$lte"] = parseFloat(query.priceMax);
+            }
+            filterOr.push({"price": filterPrice});
+        }
+
+        if (typeof query.sku == 'string') {
+            filterOr.push({"sku": new RegExp(query.sku, 'i')});
+        }
+
+        if (typeof query.name == 'string') {
+            filterOr.push({"name": new RegExp(query.name, 'i')});
+        }
+
+        if (typeof query.seller != 'undefined' && isAdmin) {
+            filterOr.push({"userId": {"$in": query.seller}});
+        }
+
+        if (filterOr.length > 0) {
+            filter["$or"] = filterOr;
+        }
+
+        if (userId.length > 0 && !isAdmin) {
+            filter["userId"] = new ObjectId(userId);
+        }
+
+        return filter;
+    }
+
+    async getPagination(productFilter: object, currentPage: number, limit: number): Promise<ProductDto[]> {
+        let result: Product[] = await this.productRepository.findByPage(productFilter, currentPage, limit);
         return ProductDtoMapper.fromArrayModelToDto(result);
     }
 
     async create(product: ProductDto): Promise<ProductDto> {
+        let products: Product[] = await this.productRepository.findBy({"sku": product.sku, userId: product.userId});
+        if (products.length > 0){
+            throw new ProductAlreadyExistError()
+        }
         let result: Product = await this.productRepository.create(ProductDtoMapper.dtoToModel(product))
         return ProductDtoMapper.fromModelToDto(result)
     }
 
     async update(id: string, productUpdate: ProductDto): Promise<ProductDto> {
-        let product: Product = await this.productRepository.findOne(id);
-        if (product) {
+        let products: Product[] = await this.productRepository.findBy({"_id": id, userId: productUpdate.userId});
+        if (products.length > 0) {
+            let product = products[0]
             product.sku = productUpdate.sku;
             product.name = productUpdate.name;
             product.price = productUpdate.price;
@@ -53,10 +99,10 @@ export class ProductService implements ProductServiceInterface {
         return productUpdate
     }
 
-    async delete(id: string): Promise<boolean> {
-        let product: Product = await this.productRepository.findOne(id);
+    async delete(id: string, userId: string): Promise<boolean> {
+        let products: Product[] = await this.productRepository.findBy({"_id": id, userId: userId});
         let isDeleted: boolean = true;
-        if (product) {
+        if (products.length > 0) {
             isDeleted = await this.productRepository.delete(id);
         } else {
             throw new ProductNotFoundError();

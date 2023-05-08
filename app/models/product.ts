@@ -6,4 +6,5 @@ export interface Product extends Timestamp {
     name: string;
     sku: string;
     price: number;
+    userId: ObjectId;
 }

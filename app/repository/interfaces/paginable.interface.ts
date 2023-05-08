@@ -1,13 +1,14 @@
 export interface ReadPaginationInterface<T> {
     /**
      * Paginate collection data
+     * @param filter
      * @param currentPage
      * @param limit
      */
-    findByPage(currentPage: number, limit: number): Promise<T[]>;
+    findByPage(filter: object, currentPage: number, limit: number): Promise<T[]>;
 
     /**
      * Count items of collection
      */
-    count(): Promise<number>;
+    count(filter: object): Promise<number>;
 }
