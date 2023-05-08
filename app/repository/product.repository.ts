@@ -14,6 +14,7 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
         const collection = await this.getCollection();
         item.createdAt = new Date();
         const result: InsertOneResult = await collection.insertOne(item);
+        await this.closeConnection();
         item._id = result.insertedId;
         return item;
     }
@@ -25,7 +26,8 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
         const collection = await this.getCollection();
         const query = {_id: new ObjectId(id.trim())};
         const result: DeleteResult = await collection.deleteOne(query);
-        return result.acknowledged
+        await this.closeConnection();
+        return result.acknowledged;
     }
 
     /**
@@ -33,12 +35,16 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
      */
     async count(filter: object): Promise<number> {
         const collection = await this.getCollection();
-        return await collection.find<Product>(filter).count();
+        let totalProducts: number = await collection.find<Product>(filter).count();
+        await this.closeConnection();
+        return totalProducts;
     }
 
     async findBy(query: Filter<any>): Promise<Product[]> {
         const collection = await this.getCollection();
-        return await collection.find<Product>(query).toArray()
+        let results: Product[] = await collection.find<Product>(query).toArray();
+        await this.closeConnection();
+        return results;
     }
 
     /**
@@ -47,12 +53,14 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
     async findByPage(filter: object, currentPage: number, limit: number): Promise<Product[]> {
         let skip = currentPage < 0 ? 0 : (currentPage - 1);
         const collection = await this.getCollection();
-        return await collection
+        let pagination: Product[] = await collection
             .find<Product>(filter)
             .limit(limit)
             .skip(skip * limit)
             .sort('_id', 'desc')
-            .toArray()
+            .toArray();
+        await this.closeConnection();
+        return pagination;
     }
 
     /**
@@ -61,7 +69,9 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
     async findOne(id: string): Promise<Product> {
         const collection = await this.getCollection();
         const query = {_id: new ObjectId(id.trim())};
-        return await collection.findOne<Product>(query) as Product
+        let product: Product = await collection.findOne<Product>(query) as Product
+        await this.closeConnection();
+        return product;
     }
 
     /**
@@ -72,6 +82,7 @@ export class ProductRepository extends Repository implements ProductRepositoryIn
         const query = {_id: new ObjectId(id)};
         item.updatedAt = new Date();
         const result: UpdateResult = await collection.updateOne(query, {$set: item});
+        await this.closeConnection();
         return result.acknowledged
     }
 }

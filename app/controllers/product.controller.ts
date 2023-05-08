@@ -16,6 +16,11 @@ const ProductNotFoundMessage: string = 'Product not found';
 const ProductAlreadyExistMessage: string = 'Sku already exist';
 
 export class ProductController {
+    /**
+     * Get all products with a pagination
+     * @param req
+     * @param res
+     */
     async getAll(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {
@@ -33,11 +38,17 @@ export class ProductController {
         }
     }
 
+    /**
+     * Get product by id
+     * @param req
+     * @param res
+     */
     async getOne(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {
+            const isAdmin = req.body.userPayload ? req.body.userPayload.isAdmin : false;
             const userId = req.body.userPayload ? req.body.userPayload.id : "";
-            const product = await productService.getOne(req.params.id, userId);
+            const product = await productService.getOne(req.params.id, userId, isAdmin);
             return getResponse(res, StatusCodes.OK, product, ProductSavedMessage);
         } catch (err) {
             if (err instanceof ProductNotFoundError) {
@@ -48,6 +59,11 @@ export class ProductController {
         }
     }
 
+    /**
+     * Create a new product
+     * @param req
+     * @param res
+     */
     async create(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {
@@ -64,6 +80,11 @@ export class ProductController {
         }
     }
 
+    /**
+     * Update a product
+     * @param req
+     * @param res
+     */
     async update(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {
@@ -80,6 +101,11 @@ export class ProductController {
         }
     }
 
+    /**
+     * Delete a product
+     * @param req
+     * @param res
+     */
     async delete(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {

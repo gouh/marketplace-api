@@ -1,6 +1,6 @@
 export interface UpdateInterfaceInterface<T> {
     /**
-     * Create a new item
+     * Update an item
      * @param id
      * @param item
      */

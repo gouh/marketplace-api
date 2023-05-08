@@ -15,6 +15,17 @@ export class UserService implements UserServiceInterface {
     constructor(private userRepository: UserRepositoryInterface, private passwordKey: string) {
     }
 
+    /**
+     * @inheritDoc
+     */
+    async getAll(): Promise<UserDto[]> {
+        let result: User[] = await this.userRepository.findBy({});
+        return UserDtoMapper.fromArrayModelToDto(result)
+    }
+
+    /**
+     * @inheritDoc
+     */
     async getOne(id: string): Promise<UserDto> {
         let dto: UserDto;
         let result: User = await this.userRepository.findOne(id);
@@ -26,6 +37,9 @@ export class UserService implements UserServiceInterface {
         return dto;
     }
 
+    /**
+     * @inheritDoc
+     */
     async create(user: UserRequestDto): Promise<UserDto> {
         let results = await this.userRepository.findBy({email: user.email})
         if (results.length) {
@@ -37,6 +51,9 @@ export class UserService implements UserServiceInterface {
         return UserDtoMapper.fromModelToDto(result)
     }
 
+    /**
+     * @inheritDoc
+     */
     async update(id: string, userUpdate: UserRequestDto): Promise<UserDto> {
         let user: User = await this.userRepository.findOne(id);
         let userUpdated: UserDto = {email: "", id: "", isAdmin: false};

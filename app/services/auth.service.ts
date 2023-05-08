@@ -14,10 +14,17 @@ export class AuthService implements AuthServiceInterface {
     constructor(private userRepository: UserRepositoryInterface, private passwordKey: string, private jwtSecret: string) {
     }
 
+    /**
+     * Make a token
+     * @param payload
+     */
     signJwt(payload: object): string {
         return jwt.sign(payload, this.jwtSecret, {expiresIn: '1h'});
     }
 
+    /**
+     * @inheritDoc
+     */
     async login(user: UserRequestDto): Promise<TokenDto> {
         let results = await this.userRepository.findBy({email: user.email})
         if (results.length == 0) {

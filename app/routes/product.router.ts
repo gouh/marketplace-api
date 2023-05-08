@@ -6,7 +6,7 @@ import {ProductMiddleware} from "../middleware/product.middleware";
 import {AuthMiddleware} from "../middleware/auth.middleware";
 
 export class ProductRouter extends AbstractRouter implements RouterInterface {
-    constructor(public app: express.Application) {
+    constructor(public app: express.Router) {
         super(app, "ProductRouter");
         this.configureRoutes();
     }

@@ -3,6 +3,10 @@ import {ObjectId} from "bson";
 import {User} from "../../models/user";
 
 export class UserDtoMapper {
+    /**
+     * Transform a dto to User model
+     * @param user
+     */
     static dtoToModel(user: UserRequestDto): User {
         return {
             _id: new ObjectId(),
@@ -12,6 +16,10 @@ export class UserDtoMapper {
         }
     }
 
+    /**
+     * Transform a dto to User model
+     * @param model
+     */
     static fromModelToDto(model: User): UserDto {
         return {
             id: model._id ? model._id.toString() : "",
@@ -21,6 +29,10 @@ export class UserDtoMapper {
         }
     }
 
+    /**
+     * Transform an array of User model to array of dto
+     * @param models
+     */
     static fromArrayModelToDto(models: User[]): UserDto[] {
         let users: UserDto[] = [];
         for (let i = 0; i < models.length; i++) {

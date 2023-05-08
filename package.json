@@ -4,13 +4,9 @@
   "description": "A marketplace with typescript, express, mongo and nodejs",
   "main": "dist/app.js",
   "scripts": {
-    "tsc": "tsc",
-    "dev-debug": "nodemon --watch . --ext ts --exec \"npm run tsc\"",
-    "start": "npm run tsc && node ./dist/app.js",
-    "start-dev": "npm i && npm run tsc && node ./dist/db/migrations/migrate.js up && node ./dist/app.js",
-    "test-dev": "nodemon --watch . --ext ts --exec \"mocha -r ts-node/register test/**/*.test.ts\"",
-    "dev": "nodemon --watch . --ext ts --exec \"docker-compose build && docker-compose up\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm i && nodemon -e ts --exec \"tsc -p ./tsconfig.json && node ./dist/app.js\"",
+    "prod": "npm run tsc && node ./dist/app.js",
+    "migrations": "npm run tsc && node ./dist/db/migrations/migrate.js up"
   },
   "repository": {
     "type": "git",
@@ -27,8 +23,6 @@
   "author": "Hugo Hernandez Valdez",
   "license": "ISC",
   "dependencies": {
-    "@types/crypto-js": "^4.1.1",
-    "@types/jsonwebtoken": "^9.0.2",
     "argon2": "^0.27.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
@@ -46,6 +40,8 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/jsonwebtoken": "^9.0.2",
     "@types/mongodb": "^4.0.7",
     "@types/argon2": "^0.15.0",
     "@types/chai": "^4.2.8",
