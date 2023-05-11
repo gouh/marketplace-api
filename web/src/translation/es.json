@@ -1,0 +1,21 @@
+{
+    "labels": {
+        "stock": "Inventario",
+        "marketplace": "Marketplace",
+        "signInToStart": "Autenticate para iniciar sesión",
+        "signIn": "Ingresar",
+        "signOut": "Salir",
+        "registerMembership": "Soy nuevo, quiero registrarme",
+        "admin": "Marketplace",
+        "login": "Login",
+        "loading": "Loading...",
+        "mins": "mins",
+        "hours": "horas",
+        "days": "dias",
+        "register": "Registrarme",
+        "alreadyHaveMembership": "Ya tengo una cuenta"
+    },
+    "languages": {
+        "spanish": "Spanish"
+    }
+}

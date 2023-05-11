@@ -1,0 +1,60 @@
+<div class="register-box">
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <router-link to="/" class="h1"><b>{{ $t("labels.admin") }}</b></router-link>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">{{ $t("labels.registerMembership") }}</p>
+
+      <form @submit.prevent="registerByAuth">
+        <app-input
+          icon="envelope"
+          class="mb-3"
+          type="email"
+          placeholder="Email"
+          autocomplete="off"
+          v-model="email"
+        />
+        <app-input
+          icon="lock"
+          class="mb-3"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+          v-model="password"
+        />
+        <app-input
+          icon="lock"
+          class="mb-3"
+          type="password"
+          placeholder="Confirmar password"
+          autocomplete="off"
+          v-model="rePassword"
+        />
+        <div class="row">
+          <div class="col-12">
+            <pf-button
+              type="submit"
+              :loading="isAuthLoading"
+            >
+              {{ $t("labels.register") }}
+            </pf-button>
+          </div>
+          <div class="col-12 mt-2">
+            <router-link to="/">
+              <button class="btn btn-block btn-success" style="font-size: 1.1em;">Regresar a home</button>
+            </router-link>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <router-link to="/login" class="mt-2 float-right">
+        {{ $t("labels.alreadyHaveMembership") }}
+      </router-link>
+    </div>
+    <!-- /.form-box -->
+  </div>
+  <!-- /.card -->
+</div>
+<!-- /.register-box -->
