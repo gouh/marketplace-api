@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 networks:
   default:
     name: some-network
@@ -8,7 +8,8 @@ services:
   nodejs:
     container_name: marketplace-api
     build:
-      context: ./nodejs
+      dockerfile: ./nodejs/Dockerfile
+      target: base
     environment:
       - VIRTUAL_HOST=marketplace-api.localhost
       - VIRTUAL_PORT=3000
