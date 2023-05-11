@@ -33,13 +33,13 @@ WEB_PORT=8080
 ```
 
 ## Adjuntos
-Se adjunta una collection de postman donde se encuentran los endpoints de la api, la url de la api es http://ec2-35-173-133-185.compute-1.amazonaws.com:3001/api/v1 y puedes ver su status en http://ec2-35-173-133-185.compute-1.amazonaws.com:3001/api/v1/health
+Se adjunta una collection de postman donde se encuentran los endpoints de la api, la url de la api es http://ec2-18-204-205-61.compute-1.amazonaws.com:3001/api/v1 y puedes ver su status en http://ec2-18-204-205-61.compute-1.amazonaws.com:3001/api/v1/health
 
 El nombre de la collection es marketplace-api.json, importante destacar que los token solo duran 1 hora.
 
 
 ## DEMO
-* Se puede ver una demo en la siguiente url: http://ec2-35-173-133-185.compute-1.amazonaws.com es http sin "s"
+* Se puede ver una demo en la siguiente url: http://ec2-18-204-205-61.compute-1.amazonaws.com es http sin "s"
 
 * Como primera pantalla veremos la lista de productos de los cuales se puede hacer un filtrado con diferentes parámetros como Nombre, sku, precio minimo, precio maximo y vendedor. Todo esto sin la necesidad de estar loggeados.
 ![imagen](https://github.com/gouh/marketplace-api/assets/13145599/055915ee-4c9f-4f65-a205-ac7145c91780)
