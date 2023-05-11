@@ -1,0 +1,37 @@
+<aside v-if="menu" class="main-sidebar elevation-4" :class="sidebarSkin">
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <pf-image
+                    :src="authentication && authentication.profile && authentication.profile.picture"
+                    fallbackSrc="assets/img/default-profile.png"
+                    class="img-circle"
+                    alt="User Image"
+                    width="34"
+                    height="34"
+                    rounded
+                ></pf-image>
+            </div>
+            <div class="info">
+                <router-link to="/profile" class="d-block">
+                    {{authentication && authentication.profile &&
+                    authentication.profile.email}}
+                </router-link>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul
+                class="nav nav-pills nav-sidebar flex-column"
+                data-widget="treeview"
+                role="menu"
+                data-accordion="false"
+            >
+                <app-menu-item
+                    v-for="item in menu"
+                    :menuItem="item"
+                ></app-menu-item>
+            </ul>
+        </nav>
+    </div>
+</aside>

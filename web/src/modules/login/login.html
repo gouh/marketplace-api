@@ -1,0 +1,58 @@
+<div class="login-box">
+  <!-- /.login-logo -->
+  <div class="card card-outline card-primary">
+    <div class="card-header text-center">
+      <router-link to="/" class="h1"
+      ><b>{{ $t("labels.admin") }}</b></router-link>
+    </div>
+    <div class="card-body">
+      <p class="login-box-msg">{{ $t("labels.signInToStart") }}</p>
+
+      <form @submit.prevent="loginByAuth">
+        <app-input
+          icon="envelope"
+          class="mb-3"
+          type="email"
+          placeholder="Email"
+          autocomplete="off"
+          v-model="email"
+        />
+        <app-input
+          icon="lock"
+          class="mb-3"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+          v-model="password"
+        />
+
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-12">
+            <pf-button
+              type="submit"
+              block="true"
+              :loading="isAuthLoading"
+            >
+              {{ $t("labels.signIn") }}
+            </pf-button>
+          </div>
+          <div class="col-12 mt-2">
+            <router-link to="/">
+              <button class="btn btn-block btn-success" style="font-size: 1.1em;">Regresar a home</button>
+            </router-link>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <p class="mb-0 mt-2 float-right">
+        <router-link to="/register" class="text-center">
+          {{ $t("labels.registerMembership") }}
+        </router-link>
+      </p>
+    </div>
+    <!-- /.card-body -->
+  </div>
+  <!-- /.card -->
+</div>

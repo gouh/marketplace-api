@@ -1,0 +1,45 @@
+<pf-dropdown hide-arrow class="user-menu">
+    <div slot="button">
+        <pf-image
+            :src="authentication && authentication.profile && authentication.profile.picture"
+            fallbackSrc="assets/img/default-profile.png"
+            class="user-image-small"
+            width="25"
+            height="25"
+            alt="User Image"
+            rounded
+        ></pf-image>
+    </div>
+    <div slot="menu">
+        <li class="user-header bg-primary">
+            <pf-image
+                :src="authentication && authentication.profile && authentication.profile.picture"
+                fallbackSrc="assets/img/default-profile.png"
+                class="user-image-big"
+                alt="User Image"
+                width="90"
+                height="90"
+                rounded
+            ></pf-image>
+
+            <p>
+                <span
+                    >{{authentication && authentication.profile &&
+                    authentication.profile.email}}</span
+                >
+                <small>
+                    <span>{{readableCreatedAtDate}}</span>
+                </small>
+            </p>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <button
+                @click="logout"
+                class="btn btn-default btn-flat float-right"
+            >
+                {{ authentication ? $t("labels.signOut") : $t("labels.signIn") }}
+            </button>
+        </li>
+    </div>
+</pf-dropdown>
