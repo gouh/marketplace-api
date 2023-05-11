@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "a5cb3178-20cb-4684-ae02-2a75b6fd2e68",
+		"name": "Marketplace API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24259159"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTgzNDBiYTg3OTc4NWM3OWIzNDAyMiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjgzNTc5MzQzLCJleHAiOjE2ODM1ODI5NDN9.48hqGRWI2Xr6FNYKSH9pocEyR13Z7w-u5aXtVEcCrus",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/products/64583b4d0483657acc6fc7ec",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"64583b4d0483657acc6fc7ec"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/products/6456d3e5afee20da2d25a76d",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6456d3e5afee20da2d25a76d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sku\": \"123\",\n    \"name\": \"Hola2\",\n    \"price\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/products/6456d3e5afee20da2d25a76e",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"6456d3e5afee20da2d25a76e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTgzNDBiYTg3OTc4NWM3OWIzNDAyMiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjgzNTc4ODQ3LCJleHAiOjE2ODM1ODI0NDd9.iHplPQcAAJVN5VhOyvMsM7kktdUt8UkO0Gt-KfpNXpQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/products?page=1&priceMax=200",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "priceMax",
+									"value": "200"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NWIzYWM0NmQ5ZDc5ODQzYTFhNGYyZSIsImVtYWlsIjoiaHVnb2h2MTBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTY4Mzc0NjAzOCwiZXhwIjoxNjgzNzQ5NjM4fQ.ssnHBC145f7hnS53U4DQi_PKoU1SAQiXDkCQO3dUOYk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"silla eames rojo\",\n    \"sku\": \"12_2\",\n    \"price\": 50\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/products",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hugohv10@gmail.com\",\n    \"password\": \"loremipsum\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/auth/signup",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"hugohv10@gmail.com\",\n    \"password\": \"loremipsum\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sellers",
+			"item": [
+				{
+					"name": "Get Sellers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NTgzNDBiYTg3OTc4NWM3OWIzNDAyMiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwiaXNBZG1pbiI6dHJ1ZSwiaWF0IjoxNjgzNTcyNzc3LCJleHAiOjE2ODM1NzYzNzd9.vKUezpsh7Sf8YSza3c6JKUcWS_gM1tJZYrBEnGQQOKA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://marketplace-api.localhost/api/v1/sellers",
+							"protocol": "http",
+							"host": [
+								"marketplace-api",
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://marketplace-api.localhost/api/v1/health",
+					"protocol": "http",
+					"host": [
+						"marketplace-api",
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
