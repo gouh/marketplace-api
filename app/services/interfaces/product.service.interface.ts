@@ -42,13 +42,15 @@ export interface ProductServiceInterface {
      * Update item
      * @param id
      * @param productDto
+     * @param isAdmin
      */
-    update(id: string, productDto: ProductDto): Promise<ProductDto>;
+    update(id: string, productDto: ProductDto, isAdmin: boolean): Promise<ProductDto>;
 
     /**
      * Delete item
      * @param id
      * @param userId
+     * @param isAdmin
      */
-    delete(id: string, userId: string): Promise<boolean>;
+    delete(id: string, userId: string, isAdmin: boolean): Promise<boolean>;
 }

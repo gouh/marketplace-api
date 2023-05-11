@@ -90,7 +90,7 @@ export class ProductController {
         try {
             let productUpdate = req.body.product as ProductDto
             productUpdate.userId = req.body.userPayload.id;
-            const storedProduct: ProductDto = await productService.update(req.params.id, productUpdate);
+            const storedProduct: ProductDto = await productService.update(req.params.id, productUpdate, req.body.userPayload.isAdmin);
             return getResponse(res, StatusCodes.OK, storedProduct, ProductUpdatedMessage);
         } catch (err) {
             if (err instanceof ProductNotFoundError) {
@@ -109,7 +109,7 @@ export class ProductController {
     async delete(req: express.Request, res: express.Response) {
         let productService: ProductServiceInterface = Container.get(ProductService);
         try {
-            await productService.delete(req.params.id, req.body.userPayload.userId);
+            await productService.delete(req.params.id, req.body.userPayload.id, req.body.userPayload.isAdmin);
             return getResponse(res, StatusCodes.NO_CONTENT, {}, ProductDeletedMessage);
         } catch (err) {
             if (err instanceof ProductNotFoundError) {
