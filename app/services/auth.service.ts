@@ -40,7 +40,8 @@ export class AuthService implements AuthServiceInterface {
                 id: userDb._id.toString(),
                 email: userDb.email,
                 isAdmin: userDb.isAdmin,
-            })
+            }),
+            isAdmin: userDb.isAdmin
         }
     }
 }

@@ -56,15 +56,15 @@ export class ProductService implements ProductServiceInterface {
             filterOr.push({"price": filterPrice});
         }
 
-        if (typeof query.sku == 'string') {
-            filterOr.push({"sku": new RegExp(query.sku, 'i')});
+        if (typeof query.name == 'string') {
+            filterOr.push({"sku": new RegExp(query.name, 'i')});
         }
 
         if (typeof query.name == 'string') {
             filterOr.push({"name": new RegExp(query.name, 'i')});
         }
 
-        if (typeof query.seller != 'undefined' && isAdmin) {
+        if (typeof query.seller != 'undefined' && (isAdmin || userId.trim() == '')) {
             let sellers: (string | ParsedQs)[] = Array.isArray(query.seller) ? query.seller : [query.seller];
             let sellerObjects: ObjectId[] = [];
             for (let i = 0; i < sellers.length; i++) {
@@ -107,8 +107,12 @@ export class ProductService implements ProductServiceInterface {
     /**
      * @inheritDoc
      */
-    async update(id: string, productUpdate: ProductDto): Promise<ProductDto> {
-        let products: Product[] = await this.productRepository.findBy({"_id": id, userId: productUpdate.userId});
+    async update(id: string, productUpdate: ProductDto, isAdmin: boolean): Promise<ProductDto> {
+        let filter: any = {"_id": new ObjectId(id), userId: productUpdate.userId};
+        if (isAdmin) {
+            delete filter.userId;
+        }
+        let products: Product[] = await this.productRepository.findBy(filter);
         if (products.length > 0) {
             let product = products[0]
             product.sku = productUpdate.sku;
@@ -127,8 +131,12 @@ export class ProductService implements ProductServiceInterface {
     /**
      * @inheritDoc
      */
-    async delete(id: string, userId: string): Promise<boolean> {
-        let products: Product[] = await this.productRepository.findBy({"_id": id, userId: userId});
+    async delete(id: string, userId: string, isAdmin: boolean): Promise<boolean> {
+        let filter: any = {"_id": new ObjectId(id), userId: userId};
+        if (isAdmin) {
+            delete filter.userId;
+        }
+        let products: Product[] = await this.productRepository.findBy(filter);
         let isDeleted: boolean = true;
         if (products.length > 0) {
             isDeleted = await this.productRepository.delete(id);

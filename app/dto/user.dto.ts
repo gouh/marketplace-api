@@ -23,6 +23,7 @@ export interface UserDto extends Timestamp, UserDtoEmailRequest, UserDtoType {
 
 export interface TokenDto {
     token: string;
+    isAdmin: boolean;
 }
 
 export class UserRequestDto implements UserRequestDto {
